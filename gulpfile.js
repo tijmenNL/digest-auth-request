@@ -17,7 +17,6 @@ gulp.task('umd', ['clean'], function(cb) {
 			namespace: 'digestAuthRequest',
 			exports: 'digestAuthRequest'
 		}),
-		uglify(),
 		rename({
 			suffix: '.min'
 		}),
