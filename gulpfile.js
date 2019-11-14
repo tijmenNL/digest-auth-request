@@ -15,8 +15,23 @@ gulp.task('umd', ['clean'], function(cb) {
 		gulp.src('digestAuthRequest.js'),
 		wrap({
 			namespace: 'digestAuthRequest',
-			exports: 'digestAuthRequest'
+			exports: 'digestAuthRequest',
+			deps: [
+			    {
+			        name: "crypto-js",
+			        paramName: 'CryptoJS'
+			    }]
 		}),
+		gulp.dest('dist')
+	],
+	uglify(),
+	cb);
+});
+
+gulp.task('min', ['umd'], function(cb) {
+	pump([
+		gulp.src('dist/digestAuthRequest.js'),
+		uglify(),
 		rename({
 			suffix: '.min'
 		}),
@@ -25,5 +40,5 @@ gulp.task('umd', ['clean'], function(cb) {
 	cb);
 });
 
-gulp.task('build', ['umd']);
+gulp.task('build', ['min']);
 gulp.task('default', ['build']);
